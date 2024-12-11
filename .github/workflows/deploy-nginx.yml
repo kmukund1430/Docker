@@ -37,35 +37,31 @@ jobs:
             # Install Docker packages:
             sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
             echo "Docker installed successfully!"
-
             
             # Pull the NGINX Docker image:
             sudo docker pull nginx
 
             # Check if the container already exists
             if sudo docker ps -a --filter "name=nginx-container" --format '{{.Names}}' | grep -w nginx-container; then
-             echo "Container 'nginx-container' already exists, skipping creation."
+              echo "Container 'nginx-container' already exists, skipping creation."
             else
-
-            # Run the NGINX container:
-            sudo docker run -d -p 80:80 --name nginx-container nginx
-            echo "NGINX container is running and accessible on port 80!"
-
-
+              # Run the NGINX container:
+              sudo docker run -d -p 80:80 --name nginx-container nginx
+              echo "NGINX container is running and accessible on port 80!"
+            fi
+            
             # Pull the Ubuntu docker image:
             sudo docker pull ubuntu 
             
             # Check if the container already exists
             if sudo docker ps -a --filter "name=mukundv1" --format '{{.Names}}' | grep -w mukundv1; then
-             echo "Container 'mukundv1' already exists, skipping creation."
+              echo "Container 'mukundv1' already exists, skipping creation."
             else
-
-            #Run the container :
-            sudo docker run -dit --name mukundv1 ubuntu
-
-            #Create directory and file inside container
-            docker exec mukundv1 bash -c "mkdir -p /tmp/mydir && echo 'File created inside the directory' > /tmp/mydir/myfile.txt"
-
-            #Verify file creation
-            docker exec my-nginx-container cat /tmp/mydir/myfile.txt
-           EOF
+              # Run the Ubuntu container:
+              sudo docker run -dit --name mukundv1 ubuntu
+              # Create directory and file inside container
+              sudo docker exec mukundv1 bash -c "mkdir -p /tmp/mydir && echo 'File created inside the directory' > /tmp/mydir/myfile.txt"
+              # Verify file creation
+              sudo docker exec nginx-container cat /tmp/mydir/myfile.txt
+            fi
+          EOF
