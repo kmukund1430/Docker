@@ -44,7 +44,7 @@ jobs:
 
             # Check if the container already exists
             if sudo docker ps -a --filter "name=nginx-container" --format '{{.Names}}' | grep -w nginx-container; then
-            echo "Container 'nginx-container' already exists, skipping creation."
+             echo "Container 'nginx-container' already exists, skipping creation."
             else
 
             # Run the NGINX container:
@@ -57,7 +57,7 @@ jobs:
             
             # Check if the container already exists
             if sudo docker ps -a --filter "name=mukundv1" --format '{{.Names}}' | grep -w mukundv1; then
-            echo "Container 'mukundv1' already exists, skipping creation."
+             echo "Container 'mukundv1' already exists, skipping creation."
             else
 
             #Run the container :
