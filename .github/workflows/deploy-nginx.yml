@@ -42,6 +42,11 @@ jobs:
             # Pull the NGINX Docker image:
             sudo docker pull nginx
 
+            # Check if the container already exists
+            if sudo docker ps -a --filter "name=nginx-container" --format '{{.Names}}' | grep -w nginx-container; then
+            echo "Container 'nginx-container' already exists, skipping creation."
+            else
+
             # Run the NGINX container:
             sudo docker run -d -p 80:80 --name nginx-container nginx
             echo "NGINX container is running and accessible on port 80!"
@@ -49,6 +54,11 @@ jobs:
 
             # Pull the Ubuntu docker image:
             sudo docker pull ubuntu 
+            
+            # Check if the container already exists
+            if sudo docker ps -a --filter "name=mukundv1" --format '{{.Names}}' | grep -w mukundv1; then
+            echo "Container 'mukundv1' already exists, skipping creation."
+            else
 
             #Run the container :
             sudo docker run -dit --name mukundv1 ubuntu
