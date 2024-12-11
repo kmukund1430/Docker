@@ -52,6 +52,10 @@ jobs:
 
             #Run the container :
             sudo docker run -dit --name mukundv1 ubuntu
-            docker exec -it mukundv1 bash 
-            cat >dockerfile
+
+            #Create directory and file inside container
+            docker exec mukundv1 bash -c "mkdir -p /tmp/mydir && echo 'File created inside the directory' > /tmp/mydir/myfile.txt"
+
+            #Verify file creation
+            docker exec my-nginx-container cat /tmp/mydir/myfile.txt
            EOF
