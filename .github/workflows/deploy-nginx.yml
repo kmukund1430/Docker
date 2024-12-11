@@ -61,6 +61,16 @@ jobs:
               sudo docker run -dit --name mukundv1 ubuntu
               # Create directory and file inside container
               sudo docker exec mukundv1 bash -c "mkdir -p /tmp/mydir && echo 'File created inside the directory' > /tmp/mydir/myfile.txt"
+             
+           # Check if the file exists inside the container:
+            file_exists=$(sudo docker exec mukundv1 bash -c "test -f /tmp/mydir/myfile.txt && echo 'File exists' || echo 'File does not exist'")
+
+            if [ "$file_exists" == "File exists" ]; then
+              echo "Success: The file was created inside the container!"
+            else
+              echo "Error: The file was not created inside the container."
+            fi   
+              
               # Verify file creation
               sudo docker exec mukundv1 cat /tmp/mydir/myfile.txt
             fi
