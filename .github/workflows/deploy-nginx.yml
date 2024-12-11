@@ -1,4 +1,4 @@
-name: Deploy to EC2 via SSH
+name: SSH to EC2
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
@@ -18,11 +18,10 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: SSH into EC2 and deploy
+    - name: SSH into EC2
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@54.82.15.99 << 'EOF'
-          echo "Deploying to EC2..."
-          sudo docker pull nginx
-          sudo docker run -d -p 80:80 --name nginx-container nginx
+        ssh -o StrictHostKeyChecking=no ubuntu@54.82.15.99 << 'EOF'
+          echo "Successfully connected to EC2 instance!"
+          # You can add other commands here if needed
         EOF
       shell: /usr/bin/bash -e {0}
