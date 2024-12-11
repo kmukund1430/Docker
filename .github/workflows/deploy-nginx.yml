@@ -37,4 +37,12 @@ jobs:
             # Install Docker packages:
             sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
             echo "Docker installed successfully!"
+
+            
+            # Pull the NGINX Docker image:
+            sudo docker pull nginx
+
+            # Run the NGINX container:
+            sudo docker run -d -p 80:80 --name nginx-container nginx
+            echo "NGINX container is running and accessible on port 80!"
           EOF
