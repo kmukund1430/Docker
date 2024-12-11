@@ -1,31 +1,25 @@
-name: SSH to EC2
+name: SSH into EC2
 
 on:
   push:
     branches:
-      - main  # Trigger on push to the main branch
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up SSH key
-      run: |
-        mkdir -p ~/.ssh  # Ensure the .ssh directory exists
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa  # Store the private key
-        chmod 600 ~/.ssh/id_rsa  # Set correct permissions for the private key
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Add EC2 to known hosts
-      run: |
-        ssh-keyscan -H 54.82.15.99 >> ~/.ssh/known_hosts  # Add EC2 instance to known hosts
-
-    - name: SSH into EC2
-      run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@54.82.15.99 << 'EOF'
-          echo "Successfully connected to EC2 instance!"
-        EOF
-        shell: /usr/bin/bash -e {0}
+      - name: SSH to EC2 instance
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@54.82.15.99 << 'EOF'
+            echo "Successfully connected to EC2 instance!"
+            # Add any other commands you want to run on the EC2 instance here
+          EOF
