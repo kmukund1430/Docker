@@ -40,7 +40,10 @@ jobs:
 
             # check the docker versions 
             sudo docker --version 
-            sudo docker images 
+            sudo docker images
+            sudo docker ps -a
+            sudo docker network ls 
+            
             
             # Pull the NGINX Docker image:
             sudo docker pull nginx
