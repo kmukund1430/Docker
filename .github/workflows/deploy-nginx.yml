@@ -62,6 +62,6 @@ jobs:
               # Create directory and file inside container
               sudo docker exec mukundv1 bash -c "mkdir -p /tmp/mydir && echo 'File created inside the directory' > /tmp/mydir/myfile.txt"
               # Verify file creation
-              sudo docker exec nginx-container cat /tmp/mydir/myfile.txt
+              sudo docker exec mukundv1 cat /tmp/mydir/myfile.txt
             fi
           EOF
