@@ -37,6 +37,10 @@ jobs:
             # Install Docker packages:
             sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
             echo "Docker installed successfully!"
+
+            # check the docker versions 
+            sudo docker --version 
+            sudo docker images 
             
             # Pull the NGINX Docker image:
             sudo docker pull nginx
