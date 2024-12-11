@@ -13,15 +13,18 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Set up SSH agent
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: Set up SSH key
+      run: |
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+
+    - name: Add EC2 to known hosts
+      run: |
+        ssh-keyscan -H 54.82.15.99 >> ~/.ssh/known_hosts
 
     - name: SSH into EC2
       run: |
         ssh -o StrictHostKeyChecking=no ubuntu@54.82.15.99 << 'EOF'
           echo "Successfully connected to EC2 instance!"
-          # You can add other commands here if needed
         EOF
-      shell: /usr/bin/bash -e {0}
+        shell: /usr/bin/bash -e {0}
