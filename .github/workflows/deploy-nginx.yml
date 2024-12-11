@@ -45,4 +45,11 @@ jobs:
             # Run the NGINX container:
             sudo docker run -d -p 80:80 --name nginx-container nginx
             echo "NGINX container is running and accessible on port 80!"
+
+
+            # Pull the Ubuntu docker image:
+            sudo docker pull ubuntu 
+
+            #Run the container :
+            sudo docker run -dit --name mukundv1 ubuntu
           EOF
