@@ -8,40 +8,21 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Step to set up SSH private key
-    - name: Set up SSH key file
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
+    - name: Set up SSH agent
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    # Step to SSH into EC2 and deploy the app
     - name: SSH into EC2 and deploy
       run: |
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@54.82.15.99 << 'EOF'
           echo "Deploying to EC2..."
-
-          # Ensure Docker is installed
-          if ! command -v docker &> /dev/null; then
-            echo "Docker not found. Installing..."
-            sudo apt-get update
-            sudo apt-get install -y docker.io
-            sudo systemctl enable --now docker
-          else
-            echo "Docker is already installed."
-          fi
-
-          # Pull NGINX Docker image and run the container
-          echo "Pulling NGINX Docker image..."
           sudo docker pull nginx
-          echo "Running NGINX container..."
           sudo docker run -d -p 80:80 --name nginx-container nginx
-
-          # Optionally: Clean up old containers (if any)
-          # sudo docker rm -f old-container-name
         EOF
+      shell: /usr/bin/bash -e {0}
