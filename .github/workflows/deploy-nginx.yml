@@ -19,7 +19,7 @@ jobs:
 
       - name: SSH to EC2 instance
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@3.95.196.35 << 'EOF'
+            ssh -o StrictHostKeyChecking=no ubuntu@3.95.196.35 << 'EOF'
             # Add Docker's official GPG key:
             sudo apt-get update
             sudo apt-get install -y ca-certificates curl
