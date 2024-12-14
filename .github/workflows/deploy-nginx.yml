@@ -15,11 +15,11 @@ jobs:
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY}}
 
       - name: SSH to EC2 instance
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@54.158.21.164 << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@3.95.196.35 << 'EOF'
             # Add Docker's official GPG key:
             sudo apt-get update
             sudo apt-get install -y ca-certificates curl
